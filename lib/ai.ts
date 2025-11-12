@@ -124,8 +124,12 @@ export async function generateExpenseInsights(
       }
     }
 
+    if (!Array.isArray(insights)) {
+      throw new Error('AI response is not a valid array of insights');
+    }
+
     // Add IDs and ensure proper format
-    const formattedInsights = insights.map(
+    const formattedInsights = (insights as RawInsight[]).map(
       (insight: RawInsight, index: number) => ({
         id: `ai-${Date.now()}-${index}`,
         type: insight.type || 'info',
